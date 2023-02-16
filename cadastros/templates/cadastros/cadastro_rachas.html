@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block titulo%} Cadastrar Racha {% endblock %}
+
+{% block cabecalho %}Cadastrar Racha{% endblock %}
+{% block corpo%}
+
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}        
+        <div class="col-sm-12">
+            <div class="form-group label-floating">
+                <label class="control-label">Nome</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group label-floating">
+                <label class="control-label">Telefone</label>
+                <input type="number" class="form-control">
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal">
+            <span class="fa fa-floppy-o" aria-hidden="true"></span> Cadastrar
+        </button>
+    </form>
+</body>
+
+{% endblock%}

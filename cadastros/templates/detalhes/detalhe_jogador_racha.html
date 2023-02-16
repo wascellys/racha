@@ -1,0 +1,63 @@
+{% extends 'layouts/base-fullscreen.html' %}
+{% load static %}
+{% block titulo%} Cadastrar Jogador {% endblock %}
+
+{% block content %}
+
+
+<body style="
+         //width: 100vw;
+         //height: 70vh;
+         //display: flex;
+         //flex-direction: row;
+         justify-content: center;
+         background-color: #000000;
+         //align-items: center">
+<div align="center" style="margin-top:30px; margin-left:5px; margin-right:5px">
+
+    <div class="card card-profile" style="width: 400px;">
+        <div class="card-avatar">
+            <a href="">
+                {% if jogador.jogador.get_foto %}
+                    <img class="img" src="{{jogador.jogador.get_foto}}" style="border-radius: 50%; width: 100px;"/>
+                {% else %}
+                    <img src="/static/images/soccer-player.png" style="border-radius: 50%; width: 100px;">
+                {% endif %}
+            </a>
+        </div>
+        <div class="card-body">
+            <h5 class="card-category text-gray">{{jogador.racha}} </h5>
+            <h3 class="card-title"><b>{{jogador.jogador.nome}}</b></h3>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5><b>Pontuação Total </b><br>{{jogador.total}}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <h5><b>Gols</b> <br>{{jogador.gols}}</h5>
+                </div>
+                <div class="col-6">
+                    <h5><b>Assistências</b> <br>{{jogador.assistencias}}</h5>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h3><b>Prêmios</b></h3>
+            </div>
+            <div class="row">
+                {% for j in jogador.premios %}
+                <div class="col-6 col-6">
+                    <h5><b>{{j.premio}} </b><br>{{j.qtd}}</h5>
+                </div>
+                {% endfor %}
+                <div class="col-sm-12">
+                    <h5>{{jogador.participacoes}} Participações </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+{% endblock%}

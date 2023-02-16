@@ -1,0 +1,67 @@
+{% extends 'layouts/base.html' %}
+
+{% block titulo%}Partidas{% endblock%}
+
+{% block cabecalho %}Registro de Partidas{% endblock %}
+{% block content %}
+
+
+<div class="ml-2 mr-2 mb-3 mt-3 text-center">
+    {% if request.user.is_superuser%}
+    <a class="btn btn-success mb-5" href="{% url 'cadastrar_partidas' racha.pk %}">Adicionar partida</a>
+    {% endif %}
+    {% if not partidas %}
+    <div class="text-center mt-5">
+        <h4 class="text-white"><b>Não há partidas cadastradas!</b></h4>
+    </div>
+</div>
+
+{% else%}
+</div>
+<div class="ml-2 mr-2 mb-3 mt-3">
+
+    <div class="table-responsive">
+        <table class="table table-hover table-dark">
+            <thead class="thead-dark">
+            <tr>
+                <th>Data</th>
+                <th class="text-right">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for partida in partidas %}
+            <tr>
+
+
+                <td>{{partida.data}}</td>
+                <td class="td-actions text-right">
+                    {% if request.user.is_superuser%}
+                    <a href="{% url 'partida' partida.pk %}" type="button" rel="tooltip" class="btn btn-info btn btn-icon btn-sm">
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="{% url 'cadastrar_candidatos_premio' partida.pk %}" type="button" rel="tooltip"
+                       class="btn btn-primary btn btn-icon btn-sm">
+                        <i class="fas fa-award"></i>
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'registro_partida' partida.pk%}" type="button" rel="tooltip"
+                       class="btn btn-warning btn btn-icon btn-sm">
+                        <i class="fas fa-list"></i>
+                    </a>
+                    <button type="button" rel="tooltip" class="btn btn-success disabled btn btn-icon btn-sm">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" rel="tooltip" class="btn btn-danger disabled btn btn-icon btn-sm" >
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endif%}
+{% endblock%}

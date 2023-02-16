@@ -1,0 +1,63 @@
+{% extends 'layouts/base.html' %}
+{% block titulo%}Ranking Geral - {{racha}}{% endblock%}
+
+{% block head %}
+<meta property="og:title" content="Ranking Artilharia">
+<meta property="og:image" content="https://logospng.org/download/copa-libertadores/logo-copa-libertadores-256.png">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="600">
+
+<meta property="og:type" content="website">
+
+{% endblock %}
+{% block cabecalho %}Ranking{% endblock%}
+{% block content%}
+
+<div class="text-center">
+    <h3 class="text-white">{{racha}}</h3>
+    <h4 class="text-white">Ranking de gols</h4>
+</div>
+
+<div class="ml-3 mr-3">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="table-responsive">
+                <table class="table table-hover table-dark">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center;"></th>
+                        <th style="text-align: center;" colspan="2">Jogador</th>
+                        <th style="text-align: center;">Gols</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in ranking %}
+                    <tr style="text-align: center">
+                        <td class="text-center"><b>{{forloop.counter}}</b></td>
+                        <td>
+                            <div class="avatar avatar-sm rounded-circle">
+                                {% if item.jogador.jogador.foto %}
+                        <img src="{{item.jogador.jogador.get_foto}}" alt="..."
+                              style="width:50px; height: 50px;border-radius:50%;object-fit: cover;">
+                        {% else %}
+                            <img src="/static/images/soccer-player.png">
+                        {% endif %}
+                            </div>
+                        </td>
+                        <td class="text-center"><a href="{% url 'detalhe_jogador_racha' item.jogador.pk racha.pk %}" class="text-white">{{item.jogador.nome}}</a>
+                        </td>
+                        <td class="text-center"><b>{{item.gols}}</b></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

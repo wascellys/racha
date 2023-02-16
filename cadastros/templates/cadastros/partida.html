@@ -1,0 +1,223 @@
+{% extends 'layouts/base.html' %}
+
+{% block titulo %}Partida {{partida.data}} - {{partida.racha.nome}}{% endblock%}
+
+{% block head %}
+<meta property="og:title" content="Ranking Geral">
+<meta property="og:image" content="https://logospng.org/download/copa-libertadores/logo-copa-libertadores-256.png">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="600">
+
+<meta property="og:type" content="website">
+{% endblock %}
+
+
+{% block cabecalho %}{{partida.data}}{% endblock%}
+
+{% block content %}
+
+
+<div class="ml-2 mr-2 mb-3 mt-3">
+    {% if request.user.is_superuser %}
+
+<!--    {% if not request.user.jogadores in jogadores%}-->
+
+<!--    <a class="btn btn-info">-->
+<!--        Marcar presença-->
+<!--    </a>-->
+
+<!--    {% else %}-->
+<!--    <a class="btn btn-danger">-->
+<!--        Retirar nome da lista-->
+<!--    </a>-->
+
+<!--    {% endif %}-->
+
+    <button class="btn btn-success " data-toggle="modal" data-target="#exampleModal">
+        Adicionar jogador
+    </button>
+
+    {% else %}
+    {% if not request.user.jogadores in jogadores%}
+
+    <a class="btn btn-info btn-block">
+        Marcar presença
+    </a>
+
+    {% else %}
+    <a class="btn btn-danger btn-block">
+        Retirar nome da lista
+    </a>
+
+    {% endif %}
+
+    {% endif %}
+
+</div>
+
+<div class="ml-2 mr-2">
+    <div class="col-md-12">
+        {% if jogadores %}
+        <table class="table table-hover table-dark">
+            <thead class="thead-dark">
+            <tbody>
+            {% for jogador in jogadores %}
+            <tr>
+                <td>
+                    <div class="avatar avatar-sm rounded-circle">
+                        {% if jogador.jogador.foto %}
+                        <img src="{{jogador.jogador.get_foto}}" alt="..."
+                              style="width:50px; height: 50px;border-radius:50%;object-fit: cover;">
+                        {% else %}
+                            <img src="/static/images/soccer-player.png">
+                        {% endif %}
+                    </div>
+                </td>
+
+                <td>
+                    <h3 class="text-white"><b>{{jogador.jogador}}</b></h3>
+                </td>
+                <td class="td-actions">
+                    <a onclick="setaDadosModal({{jogador.jogador.id}}, {{partida.id}})"
+                       href="" class="gol btn btn-warning btn-just-icon btn-sm" data-toggle="modal"
+                       data-target="#modal" id="{{jogador.jogador.id}}">
+                        <i class="fas fa-futbol"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <div class="text-center">
+            <h4 class="text-white"><b>Ainda não há jogadores presentes!</b></h4>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<!--MODAL PARA CADASTRAR JOGADORES PRESENTES-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <h4>Jogadores do Racha</h4>
+                            <form method="post" enctype="multipart/form-data"
+                                  action="{% url 'cadastrar_jogadores_presentes' partida.pk %}">
+                                {% csrf_token %}
+                                {% for j in jogadores_ausentes %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="jogadores" value="{{j.id}}">
+                                        {{j.jogador}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+
+                                <div class="">
+                                    <button type="submit" class="btn btn-success btn-round">
+                                        Adicionar na partida
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <h4>Jogadores Presentes</h4>
+                            <form method="post" enctype="multipart/form-data"
+                                  action="{% url 'remove_jogador_partida' partida.pk %}">
+                                {% csrf_token %}
+                                {% for jogador in jogadores %}
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remover_jogador" value="{{jogador.id}}">
+                                        {{jogador.jogador}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                                <button type="submit" class="btn btn-danger btn-round">
+                                    Remover da partida
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="color: rgb(255, 255, 255); background-color:rgb(25, 172, 20);">
+                <h4 class="modal-title" id="exampleModalLabel"><b>Gooooooool</b></h4>
+            </div>
+            <form method="POST" action="{% url 'anotar_gol' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <h5><b id="nome_jogador_gol">Selecione o jogador que deu a assistencia para o gol</b></h5>
+
+                    <div class="col-sm-12">
+                        <div class="form-group label-floating">
+                            <input type="hidden" name="gol" class="form-control" id="input_jogador_gol">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group label-floating">
+                            <input type="hidden" name="partida_atual" class="form-control" id="input_partida">
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-6 col-sm-3">
+                                <select class="form-control" data-style="select-with-transition"
+                                        title="Clique para selecionar o assistente" data-size="7" name="assistente">
+                                    <option value="">SELECIONE O ASSISTENTE</option>
+                                    {% for jp in jogadores %}
+                                    <option value="{{jp.jogador.id}}">{{jp.jogador}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a type="button" class="btn btn-danger" data-dismiss="modal">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Anotar Gol
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function setaDadosModal(valor, partida){
+        id = valor;
+        partida = partida
+        $('#input_jogador_gol').val(id);
+        $('#input_partida').val(partida);
+    }
+
+
+
+
+
+</script>
+
+
+{% endblock%}

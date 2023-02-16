@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block titulo%} Cadastrar Jogador {% endblock %}
+
+{% block cabecalho %}Cadastrar Jogador{% endblock%}
+{% block content %}
+
+
+<div class="ml-3 mr-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group " style="margin-left:20px;">
+                <h4>Jogadores</h4>
+                <form method="post" enctype="multipart/form-data"
+                      action="{% url 'cadastrar_jogadores_racha' racha.pk%}">
+                    {% csrf_token %}
+                    {% for j in jogadores %}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="jogadores" value="{{j.id}}">
+                            {{j.nome}}
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-round">
+                        Adicionar no Racha
+                    </button>
+                    {% endfor %}
+                    <p class="text-center">Não há jogadores para ser importado</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

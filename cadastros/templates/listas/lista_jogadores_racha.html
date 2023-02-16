@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html' %}
+
+{% block titulo%}Jogadores{% endblock%}
+{% block cabecalho %}Jogadores {{racha}}{% endblock %}
+{% block content %}
+
+<div class="ml-3 mr-3 mb-3 mt-3">
+    <a class="btn btn-success" href="/cadastrar_jogadores_racha/{{racha.pk}}">Adicionar Novo</a>
+    <a class="btn btn-info" href="/cadastrar_jogadores_racha/{{racha.pk}}">Importar jogadores</a>
+    {% if not jogadores %}
+    <div class="text-center">
+        <h4><b>Não há jogadores cadastrados para este racha</b></h4>
+    </div>
+    {% else%}
+</div>
+<div class="ml-3 mr-3 mb-3">
+    <div class="table-responsive">
+        <table class="table table-hover table-dark">
+            <thead class="thead-dark">
+            <tr>
+                <th class="text-center"></th>
+                <th>Jogador</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for jogador in jogadores %}
+            <tr>
+                <td>
+                    <div class="avatar avatar-sm rounded-circle bg-primary">
+                        {% if jogador.jogador.foto %}
+                        <img src="{{jogador.jogador.get_foto}}" alt="..."
+                             style="width:50px; height: 50px;border-radius:50%;object-fit: cover;">
+                        {% else %}
+                        <img src="/static/images/soccer-player.png">
+                        {% endif %}
+                    </div>
+                </td>
+                <td class="td-name">
+                    <a href="{% url 'detalhe_jogador_racha' jogador.jogador.pk racha.pk %}" class="text-white">{{jogador.jogador.nome}}</a>
+                </td>
+
+                {% if request.user.is_superuser %}
+                <td class="td-actions">
+                    <button type="button" rel="tooltip" data-placement="left" title="Desativar jogador"
+                            class="btn btn-icon btn-danger btn-sm">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endif%}
+{% endblock%}

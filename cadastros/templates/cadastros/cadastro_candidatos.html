@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Partida {{partida.data}} - {{partida.racha.nome}}{% endblock%}
+
+{% block head %}
+<meta property="og:title" content="Vote nos craques da rodada">
+<meta property="og:image" content="https://logospng.org/download/copa-libertadores/logo-copa-libertadores-256.png">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="600">
+
+<meta property="og:type" content="website">
+{% endblock %}
+
+{% block cabecalho %}{{partida.data}}{% endblock%}
+
+{% block corpo %}
+
+<form method="POST">
+    <div class="row">
+        <div class="card">
+            <div class="card-content">
+                <h4 class="card-title"> {{partida.racha.nome}} : Partida de {{partida.data}}</h4>
+                <div class="col-12">
+                    <label>Selecione o Prêmio: </label>
+                </div>
+                <div class="col-12">
+                    <select class="selectpicker " data-style="btn-info">
+                        <option>----------</option>
+                        {% for p in premios%}
+                        <option>{{p.nome | upper }}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label>Selecione os jogadores:</label>
+                </div>
+                <div class="col-12">
+                    <select class="selectpicker" multiple data-style="btn-info" data-live-search="true"
+                            title="Selecione" style="color:white;">
+                        {% for j in jogadores %}
+                        <option>{{j.jogador| upper }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                 <button type="button" class="btn btn-success pull-right">
+                    <span class="fa fa-floppy-o" aria-hidden="true"></span> Cadastrar
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+<script type="text/javascript">
+       $(function () {
+        $('select').selectpicker();
+    });
+
+
+
+
+
+</script>
+
+
+{% endblock%}

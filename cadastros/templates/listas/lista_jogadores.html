@@ -1,0 +1,63 @@
+{% extends 'layouts/base.html' %}
+
+{% block titulo%}<b>Jogadores</b>{% endblock%}
+{% block cabecalho %}Jogadores{% endblock %}
+{% block content %}
+
+<div class="ml-2 mr-2 mb-3">
+    <a class="btn btn-success" href="/cadastrar_jogadores">Adicionar jogadores</a>
+    {% if not jogadores %}
+    <div class="text-center">
+        <h4><b>Não há jogadores cadastrados</b></h4>
+    </div>
+    {% else%}
+</div>
+
+<div class="ml-2 mr-2">
+    <div class="table-responsive">
+        <table class="table table-hover table-dark">
+            <thead class="thead-dark">
+            <tr>
+                <th class="text-center"></th>
+                <th>Jogador</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for jogador in jogadores %}
+            <tr>
+                <td>
+                    <div class="avatar avatar-sm rounded-circle">
+                        {% if jogador.foto %}
+                        <img src="{{jogador.get_foto}}" alt="..."
+                             style="width:50px; height: 50px;border-radius:50%;object-fit: cover;">
+                        {% else %}
+                            <img src="/static/images/soccer-player.png">
+                        {% endif %}
+                    </div>
+                </td>
+                <td class="td-name">
+                    <a href="" class="text-white">{{jogador.nome}}</a>
+                </td>
+
+
+                <td class="td-actions">
+                    <button type="button" rel="tooltip" data-placement="left" title="Editar jogador"
+                            class="btn btn-sm btn-info">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" rel="tooltip" data-placement="left" title="Desativar jogador"
+                            class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endif%}
+{% endblock%}

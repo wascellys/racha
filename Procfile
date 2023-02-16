@@ -1,0 +1,1 @@
+web: gunicorn racha.wsgi --log-file -

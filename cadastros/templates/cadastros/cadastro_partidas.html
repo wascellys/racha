@@ -1,0 +1,64 @@
+<!--return HttpResponseRedirect(request.META.get("HTTP_REFERER"))-->
+
+{% extends 'layouts/base.html' %}
+
+{% block titulo%} Cadastrar Partida {% endblock %}
+
+{% block cabecalho %}Cadastrar Partida{% endblock %}
+{% block content %}
+
+<div class="text-center">
+    <h4 class="text-white">Cadastrar partida</h4>
+</div>
+
+<div class="ml-3 mr-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group " style="margin-left:20px;">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label>Data da partida</label>
+                    <div class="form-group">
+                        <input type="date" name="data" max="3000-12-31"
+                               min="1000-01-01" class="form-control">
+                    </div>
+                    <label>Local</label>
+                    <div class="form-group">
+                        <input type="text" name="local" class="form-control">
+                    </div>
+
+                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal">
+                        <span class="fa fa-floppy-o" aria-hidden="true"></span> Cadastrar
+                    </button>
+
+                    <div class="clearfix"></div>
+
+                    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" data-background-color="green">
+                                    <h5 class="modal-title">Confirmar</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Confirmar cadastro de Partida?</h5>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar
+                                        </button>
+                                        <button type="submit" class="btn btn-success">
+                                            Cadastrar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

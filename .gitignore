@@ -1,0 +1,7 @@
+.idea
+.vscode
+*.sqlite
+env_racha
+*pyc
+.env
+db.sqlite3

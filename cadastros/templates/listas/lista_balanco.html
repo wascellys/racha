@@ -1,0 +1,62 @@
+{% extends 'layouts/base.html' %}
+{% block titulo%}Balanco Financeiro{% endblock%}
+{% load humanize %}
+{% block head %}
+<meta property="og:title" content="Ranking Artilharia">
+<meta property="og:image" content="https://logospng.org/download/copa-libertadores/logo-copa-libertadores-256.png">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="600">
+
+<meta property="og:type" content="website">
+
+{% endblock %}
+{% block cabecalho %}Balanço Financeiro{% endblock%}
+{% block content %}
+
+<div class="text-center">
+    <h3 class="text-white">{{racha}}</h3>
+    <h4 class="text-white">Lista de Registros</h4>
+</div>
+
+<div class="ml-3 mr-3">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover table-dark">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="text-align: center;" >Membro/Jogador</th>
+                    <th style="text-align: center;">Descrição Tipo</th>
+                    <th style="text-align: center;">Tipo Entrada</th>
+                    <th style="text-align: center;">Valor</th>
+                    <th style="text-align: center;">Data</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for balanco in lista_balanco %}
+                <tr style="text-align: center">
+                    <td>
+                        {{balanco.membro.jogador}}
+                    </td>
+                    <td class="text-center">
+                        {{balanco.get_tipo_display}}
+                    </td>
+                    <td class="text-center">
+                        {{balanco.get_entrada_display}}
+                    </td>
+                    <td class="text-center">
+                        {{balanco.valor | floatformat:2|intcomma}}
+                    </td>
+                    <td class="text-center">
+                        {{balanco.data}}
+                    </td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

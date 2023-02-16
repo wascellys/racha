@@ -1,0 +1,137 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<style>
+    .card-button {
+       height:80;
+       //width:200px;
+       float:left;
+    }
+    .btn:hover {
+        transform: translateY(10px);
+    }
+
+
+
+</style>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-secondary card-button btn-animated"
+               href="{% url 'lista_ranking' racha.pk %}">
+                <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3> Ranking Geral</h3>
+            </a>
+
+        </div>
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-secondary card-button"
+               href="{% url 'lista_artilharia' racha.pk %}">
+                <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <h3>Artilharia</h3>
+            </a>
+
+        </div>
+
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-secondary card-button"
+               href="{% url 'lista_assistencias' racha.pk %}">
+                <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h3>Assistencias</h3>
+            </a>
+
+        </div>
+
+
+        {% if request.user.is_superuser %}
+
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-secondary card-button"
+               href="{% url 'lista_assistencias' racha.pk %}">
+                <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Prêmios</h3>
+            </a>
+
+        </div>
+
+        {% endif %}
+        {% if request.user.is_superuser %}
+
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-secondary card-button"
+               href="{% url 'lista_assistencias' racha.pk %}">
+                <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>Estatisticas</h3>
+            </a>
+
+        </div>
+
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-secondary card-button"
+               href="{% url 'lista_de_jogadores_racha' racha.pk %}">
+                <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <h3>Jogadores</h3>
+            </a>
+
+        </div>
+
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-secondary card-button"
+               href='{% url "lista_balanco" racha.id %}'>
+                <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                        <i class="fas fa-dollar"></i>
+                    </div>
+                </div>
+                <h3>Financeiro</h3>
+            </a>
+
+        </div>
+
+
+        <div class="col-md-6 col-xs-6 mt-3">
+
+            <a class="btn btn-block btn-large btn-success card-button"
+               href='{% url "lista_de_partida_racha" racha.id %}'>
+                <div class="col-auto">
+                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <h3>Partidas</h3>
+            </a>
+
+        </div>
+
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% endblock%}

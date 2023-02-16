@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block titulo%}<b>Prêmios</b>{% endblock%}
+
+{% block cabecalho %}Premios{% endblock %}
+
+{% block corpo%}
+{% if request.user.is_superuser%}
+<a class="btn btn-success btn-block" href="{% url 'cadastrar_premios' racha.pk %}">Adicionar prêmio</a>
+{% endif %}
+{% if not premios %}
+<div class="text-center">
+    <h4><b>Não há partidas cadastradas!</b></h4>
+</div>
+{% else%}
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Nome</th>
+                    <th>Score</th>
+                    <th>Contabilizar</th>
+                    <th class="text-right">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for premio in premios %}
+                <tr>
+                    <td class="text-center">{{premio.pk}}</td>
+                    <td>{{premio.nome}}</td>
+                    <td>{{premio.score}}</td>
+                    <td>{{premio.get_contabilizar}}</td>
+                    <td class="td-actions text-right">
+
+                        <button type="button" rel="tooltip" class="btn btn-success disabled">
+                            <i class="material-icons">edit</i>
+                        </button>
+                        <button type="button" rel="tooltip" class="btn btn-danger disabled">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endif%}
+{% endblock%}

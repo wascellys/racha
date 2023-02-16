@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block titulo%} Cadastrar Prêmio {% endblock %}
+
+
+{% block cabecalho %}Cadastrar Prêmio{% endblock %}
+{% block corpo%}
+
+<body>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-sm-12">
+        <div class="form-group label-floating">
+            <label class="control-label">Nome</label>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group label-floating">
+            <label class="control-label">Score</label>
+            <input type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="">
+                Contabilizar no raking geral
+                <span class="form-check-sign">
+                  <span class="check"></span>
+              </span>
+            </label>
+        </div>
+
+    </div>
+
+
+
+    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal">
+        <span class="fa fa-floppy-o" aria-hidden="true"></span> Cadastrar
+    </button>
+</form>
+
+
+</body>
+
+{% endblock%}
